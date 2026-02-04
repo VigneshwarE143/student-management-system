@@ -86,17 +86,7 @@ api.interceptors.response.use(
 );
 
 // ========== AUTH ==========
-// Note: backend exposes admin login at /api/admins/login; fall back if the route is singular
-export const login = async (credentials) => {
-  try {
-    return await api.post(`${API_BASE_URL}/api/admins/login`, credentials);
-  } catch (err) {
-    if (err.response?.status === 404) {
-      return api.post(`${API_BASE_URL}/api/admin/login`, credentials);
-    }
-    throw err;
-  }
-};
+export const login = (credentials) => api.post(`${API_BASE_URL}/api/admins/login`, credentials);
 export const teacherLogin = (credentials) =>
   api.post(`${API_BASE_URL}/api/teachers/login`, credentials);
 export const logout = () => {
