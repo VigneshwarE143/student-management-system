@@ -33,6 +33,7 @@ public class TeacherRequestDTO {
   @Pattern(regexp = "^[0-9]{10,15}$", message = "Phone number must be between 10-15 digits")
   private String phone;
 
+  @NotBlank(message = "Password cannot be empty")
   @Size(min = 6, message = "Password must be at least 6 characters")
   private String password;
 }

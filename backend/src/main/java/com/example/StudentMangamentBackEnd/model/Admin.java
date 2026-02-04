@@ -24,5 +24,6 @@ public class Admin {
   private String email;
 
   @NotBlank(message = "Password cannot be empty")
+  @Column(length = 255, nullable = false)
   private String password;
 }

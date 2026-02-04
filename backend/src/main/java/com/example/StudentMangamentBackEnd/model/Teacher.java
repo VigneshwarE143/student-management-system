@@ -35,6 +35,7 @@ public class Teacher {
   private Integer age;
   private String phone;
 
+  @Column(length = 255, nullable = false)
   private String password; // required for login
 
   @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
