@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API_BASE_URL = 'https://student-management-system-production-251b.up.railway.app';
+
 // Token validation utilities
 export const getStoredToken = () => {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -46,7 +48,7 @@ export const extractList = (payload) => {
 };
 
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -87,46 +89,47 @@ api.interceptors.response.use(
 // Note: backend exposes admin login at /api/admins/login; fall back if the route is singular
 export const login = async (credentials) => {
   try {
-    return await api.post('/admins/login', credentials);
+    return await api.post(`${API_BASE_URL}/api/admins/login`, credentials);
   } catch (err) {
     if (err.response?.status === 404) {
-      return api.post('/admin/login', credentials);
+      return api.post(`${API_BASE_URL}/api/admin/login`, credentials);
     }
     throw err;
   }
 };
-export const teacherLogin = (credentials) => api.post('/teachers/login', credentials);
+export const teacherLogin = (credentials) =>
+  api.post(`${API_BASE_URL}/api/teachers/login`, credentials);
 export const logout = () => {
   clearAuth();
 };
 
 // ========== STUDENTS ==========
-export const getStudents = (params) => api.get('/students', { params });
+export const getStudents = (params) => api.get(`${API_BASE_URL}/api/students`, { params });
 export const searchStudents = (name, params) =>
-  api.get('/students/search', { params: { name, ...params } });
-export const getStudentById = (id) => api.get(`/students/${id}`);
-export const createStudent = (data) => api.post('/students', data);
-export const updateStudent = (id, data) => api.put(`/students/${id}`, data);
-export const deleteStudent = (id) => api.delete(`/students/${id}`);
+  api.get(`${API_BASE_URL}/api/students/search`, { params: { name, ...params } });
+export const getStudentById = (id) => api.get(`${API_BASE_URL}/api/students/${id}`);
+export const createStudent = (data) => api.post(`${API_BASE_URL}/api/students`, data);
+export const updateStudent = (id, data) => api.put(`${API_BASE_URL}/api/students/${id}`, data);
+export const deleteStudent = (id) => api.delete(`${API_BASE_URL}/api/students/${id}`);
 export const assignTeacherToStudent = (studentId, teacherId) =>
-  api.put(`/students/${studentId}/teacher/${teacherId}`);
+  api.put(`${API_BASE_URL}/api/students/${studentId}/teacher/${teacherId}`);
 export const removeTeacherFromStudent = (studentId) =>
-  api.delete(`/students/${studentId}/teacher`);
+  api.delete(`${API_BASE_URL}/api/students/${studentId}/teacher`);
 
 // ========== TEACHERS ==========
-export const getTeachers = (params) => api.get('/teachers', { params });
+export const getTeachers = (params) => api.get(`${API_BASE_URL}/api/teachers`, { params });
 export const searchTeachers = (name, params) =>
-  api.get('/teachers/search', { params: { name, ...params } });
-export const getTeacherById = (id) => api.get(`/teachers/${id}`);
-export const createTeacher = (data) => api.post('/teachers', data);
-export const updateTeacher = (id, data) => api.put(`/teachers/${id}`, data);
-export const deleteTeacher = (id) => api.delete(`/teachers/${id}`);
+  api.get(`${API_BASE_URL}/api/teachers/search`, { params: { name, ...params } });
+export const getTeacherById = (id) => api.get(`${API_BASE_URL}/api/teachers/${id}`);
+export const createTeacher = (data) => api.post(`${API_BASE_URL}/api/teachers`, data);
+export const updateTeacher = (id, data) => api.put(`${API_BASE_URL}/api/teachers/${id}`);
+export const deleteTeacher = (id) => api.delete(`${API_BASE_URL}/api/teachers/${id}`);
 
 // ========== ADMINS (optional) ==========
-export const getAdmins = (params) => api.get('/admins', { params });
-export const getAdminById = (id) => api.get(`/admins/${id}`);
-export const createAdmin = (data) => api.post('/admins', data);
-export const updateAdmin = (id, data) => api.put(`/admins/${id}`, data);
-export const deleteAdmin = (id) => api.delete(`/admins/${id}`);
+export const getAdmins = (params) => api.get(`${API_BASE_URL}/api/admins`, { params });
+export const getAdminById = (id) => api.get(`${API_BASE_URL}/api/admins/${id}`);
+export const createAdmin = (data) => api.post(`${API_BASE_URL}/api/admins`, data);
+export const updateAdmin = (id, data) => api.put(`${API_BASE_URL}/api/admins/${id}`, data);
+export const deleteAdmin = (id) => api.delete(`${API_BASE_URL}/api/admins/${id}`);
 
 export default api;
